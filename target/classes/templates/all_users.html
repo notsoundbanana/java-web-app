@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Userlist</title>
+</head>
+<body>
+<h1>Users List:</h1>
+<table>
+    <thead>
+    <tr>
+        <th> Email</th>
+        <th> Login</th>
+        <th> Password</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.empty}">
+        <td colspan="2"> No Books Available</td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td><span th:text="${user.email}"> Email </span></td>
+        <td><span th:text="${user.login}"> Login </span></td>
+        <td><span th:text="${user.password}"> Password </span></td>
+        <td>
+            <form action="#" th:action="'/user/delete_user/{id}(id=$({user.email}))'" method="post">
+                <button th:id="'table_entry_user_button_' + ${user.email}" type="submit">
+                    <i>X</i>
+                </button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<form action="/user/delete_user" method="post">
+    <input type="text" name="num_to_delete">
+    <button type="submit">Delete</button>
+</form>
+</body>
+</html>
