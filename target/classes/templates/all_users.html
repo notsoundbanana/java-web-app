@@ -23,19 +23,19 @@
         <td><span th:text="${user.login}"> Login </span></td>
         <td><span th:text="${user.password}"> Password </span></td>
         <td>
-            <form action="#" th:action="'/user/delete_user/{id}(id=$({user.email}))'" method="post">
+            <form action="#" th:action="'/user/delete_user/' + ${user.email}" method="post">
                 <button th:id="'table_entry_user_button_' + ${user.email}" type="submit">
                     <i>X</i>
+                </button>
+            </form>
+            <form action="#" th:action="'/user/edit_user/' + ${user.email}" method="post">
+                <button th:id="'table_entry_user_button_' + ${user.email}" type="submit">
+                    <i>Edit</i>
                 </button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
-
-<form action="/user/delete_user" method="post">
-    <input type="text" name="num_to_delete">
-    <button type="submit">Delete</button>
-</form>
 </body>
 </html>
