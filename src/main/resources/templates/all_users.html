@@ -16,7 +16,7 @@
     </thead>
     <tbody>
     <tr th:if="${users.empty}">
-        <td colspan="2"> No Books Available</td>
+        <td colspan="2"> No users found</td>
     </tr>
     <tr th:each="user : ${users}">
         <td><span th:text="${user.email}"> Email </span></td>
