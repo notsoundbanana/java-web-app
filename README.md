@@ -1,5 +1,5 @@
 # java-web-app
-Learning to work with databases, Spring and Thymeleaf
+Learning to work with databases, Spring, Thymeleaf and MySQL
 
 # How to run
 Run scr/main/java/org/Main.java
