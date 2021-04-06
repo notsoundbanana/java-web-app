@@ -17,7 +17,6 @@ public class MainController {
     @GetMapping("/hello")
     public String helloPage(Model model){
         model.addAttribute("text", "Hello world");
-        userDao.save();
         return "index";  //
     }
 

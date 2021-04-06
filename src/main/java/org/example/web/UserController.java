@@ -17,6 +17,7 @@ public class UserController {
     @PostMapping("/add")
     public String addUser(@RequestParam String email, String login, String password) {
         User user = new User(email, login, password);
+        UserDao.add(user);
 
         return "redirect:/user";
     }
@@ -28,17 +29,22 @@ public class UserController {
 
     @GetMapping("/all_users")
     public String userPage(Model model) {
+        model.addAttribute("users", UserDao.all_users());
         return "all_users";
     }
 
     @PostMapping("/delete_user/{userToDelete}")
     public String deleteUser(@PathVariable String userToDelete) {
+        UserDao.delete(userToDelete);
         return "redirect:/user/all_users";
     }
 
     @PostMapping("/edit_user/{userToEdit}")
     public String editUser(@PathVariable String userToEdit, Model model) {
-        return "redirect:/user/all_users";
+        String user = UserDao.edit(userToEdit);
+        System.out.println(user + " user");
+        model.addAttribute("user");
+        return "edit_user";
     }
 
     @PostMapping("/submit_edited_user/{old_email}")
