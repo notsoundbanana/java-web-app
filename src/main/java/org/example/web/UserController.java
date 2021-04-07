@@ -41,15 +41,17 @@ public class UserController {
 
     @PostMapping("/edit_user/{userToEdit}")
     public String editUser(@PathVariable String userToEdit, Model model) {
-        String user = UserDao.edit(userToEdit);
-        System.out.println(user + " user");
-        model.addAttribute("user");
+        model.addAttribute("user", UserDao.edit(userToEdit));
         return "edit_user";
     }
 
     @PostMapping("/submit_edited_user/{old_email}")
     public String submitEditedUser(@PathVariable String old_email,
                                    @RequestParam String email, String login, String password) {
+
+        User user = new User(email, login, password);
+        System.out.println(user);
+        UserDao.submit_editing(old_email, user);
 
         return "redirect:/user/all_users";
     }

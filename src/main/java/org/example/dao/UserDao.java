@@ -68,16 +68,44 @@ public class UserDao {
         }
     }
 
-    public String edit(String email) {
+    public ArrayList<User> edit(String userToEdit) {
+        ArrayList<User> userList = new ArrayList<User>();
         try {
             Statement statement = connection.createStatement();
-            String line = String.format("SELECT * WHERE email='%s' FROM user", email);
+            String line = String.format("SELECT * FROM user WHERE email='%s' ", userToEdit);
             ResultSet resultSet = statement.executeQuery(line);
-            return String.valueOf(resultSet);
+            String email = null;
+            String login = null;
+            String password = null;
+            while (resultSet.next()) {
+                email = resultSet.getString(2);
+                login = resultSet.getString(3);
+                password = resultSet.getString(4);
+                User user = new User(email, login, password);
+                userList.add(user);
+            }
+            return userList;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return "redirect:/user/all_users";
+        return userList;
+    }
+
+    public void submit_editing(String old_email, User user) {
+        try {
+            Statement statement = connection.createStatement();
+//            statement.executeUpdate(String.format("SET SQL_SAFE_UPDATES = 0;\n" +
+//                    "update user set login='%s' WHERE email='%s'", user.login, old_email));
+//            statement.executeUpdate(String.format("SET SQL_SAFE_UPDATES = 0;\n" +
+//                    "update user set login='%s' WHERE email='%s'", user.password, old_email));
+//            statement.executeUpdate(String.format("SET SQL_SAFE_UPDATES = 0;\n" +
+//                    "update user set login='%s' WHERE email='%s'", user.email, old_email));
+            statement.executeUpdate(String.format("update user set login='%s' WHERE email='%s'", user.login, old_email));
+            statement.executeUpdate(String.format("update user set password='%s' WHERE email='%s'", user.password, old_email));
+            statement.executeUpdate(String.format("update user set email='%s' WHERE email='%s'", user.email, old_email));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 }
